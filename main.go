@@ -23,12 +23,20 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
 type postUrl struct{
 	LongURL string `json:"long_url"`
 	Life int `json:"life"`
+}
+func determineListenAddress() (string, error) {
+	port := os.Getenv("PORT")
+	if port == "" {
+		return "", fmt.Errorf("$PORT not set")
+	}
+	return ":" + port, nil
 }
 func main(){
 	mongoURI:="mongodb+srv://ahmdaeyz:ahmd1234@cluster0-i9ke0.mongodb.net/test?retryWrites=true&w=majority"
@@ -98,5 +106,9 @@ func main(){
 			"expires": expires.Format(time.ANSIC),
 		})
 	})
-	log.Fatal(r.Run())
+	listeningAt, err := determineListenAddress()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Fatal(r.Run(":"+listeningAt))
 }
