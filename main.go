@@ -110,5 +110,5 @@ func main(){
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Fatal(r.Run(":"+listeningAt))
+	log.Fatal(r.Run(listeningAt))
 }
