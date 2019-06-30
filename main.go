@@ -52,11 +52,12 @@ func main(){
 	//			time.Sleep(1*time.Second)
 	//		}
 	//	}()
+	gin.SetMode(gin.ReleaseMode)
 	r:= gin.Default()
 	r.GET("/s/:short", func(c *gin.Context) {
 		shortURL:=c.Param("short")
 		var result bson.M
-		ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+		ctx, _ = context.WithTimeout(context.Background(), 20*time.Second)
 		lookup:=collection.FindOne(ctx,bson.M{"short_url":shortURL})
 		err=lookup.Decode(&result)
 		if err==mongo.ErrNoDocuments{
