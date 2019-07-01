@@ -80,7 +80,7 @@ func main(){
 			i.AbortWithStatusJSON(404,gin.H{"error":errors.New("url doesn't exist").Error()})
 			return
 		}
-		views,_:=strconv.Atoi(fmt.Sprintf("%v",result["long_url"]))
+		views,_:=strconv.Atoi(fmt.Sprintf("%d",result["long_url"]))
 		i.JSON(200,gin.H{
 			"long_url":fmt.Sprintf("%v",result["long_url"]),
 			"short_url":fmt.Sprintf("%v",result["short_url"]),
