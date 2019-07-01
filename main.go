@@ -24,6 +24,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 )
 type postUrl struct{
@@ -68,6 +69,23 @@ func main(){
 			return
 		}
 		c.Redirect(http.StatusPermanentRedirect,fmt.Sprintf("%v", result["long_url"]))
+	})
+	r.GET("/i/:short", func(i *gin.Context) {
+		shortURL:= i.Param("short")
+		var result bson.M
+		ctx, _ = context.WithTimeout(context.Background(), 20*time.Second)
+		lookup:=collection.FindOne(ctx,bson.M{"short_url":shortURL})
+		err=lookup.Decode(&result)
+		if err==mongo.ErrNoDocuments{
+			i.AbortWithStatusJSON(404,gin.H{"error":errors.New("url doesn't exist").Error()})
+			return
+		}
+		views,_:=strconv.Atoi(fmt.Sprintf("%v",result["long_url"]))
+		i.JSON(200,gin.H{
+			"long_url":fmt.Sprintf("%v",result["long_url"]),
+			"short_url":fmt.Sprintf("%v",result["short_url"]),
+			"views":views,
+		})
 	})
 	r.POST("/l", func(i *gin.Context) {
 		var postURL postUrl
