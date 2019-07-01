@@ -100,7 +100,7 @@ func main(){
 		}
 		_,err=collection.InsertOne(ctx,bson.M{"long_url":postURL.LongURL,"short_url":token,"expires":expires ,"keep":true})
 		if err!=nil{
-			i.JSON(502,gin.H{"error":err})
+			i.JSON(502,gin.H{"error":err.Error()})
 			return
 		}
 		i.JSON(200,gin.H{
