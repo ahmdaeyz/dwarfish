@@ -87,10 +87,12 @@ func main(){
 			count,err:=collection.CountDocuments(ctx,bson.M{"short_url":token})
 			if err!=nil{
 				i.JSON(http.StatusBadGateway,gin.H{"error":errors.New("database error")})
-			}
-			if count==1{
 				break
 			}
+			if count==0{
+				break
+			}
+			log.Println(token ,"duplicate")
 		}
 		if postURL.Life!=0{
 			duration, _:=time.ParseDuration(strconv.Itoa(postURL.Life)+"h")
