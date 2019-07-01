@@ -98,6 +98,7 @@ func main(){
 			duration, _:=time.ParseDuration(strconv.Itoa(postURL.Life)+"h")
 			expires=time.Now().Add(duration)
 		}
+		ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
 		_,err=collection.InsertOne(ctx,bson.M{"long_url":postURL.LongURL,"short_url":token,"expires":expires ,"keep":true})
 		if err!=nil{
 			i.JSON(502,gin.H{"error":err.Error()})
