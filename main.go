@@ -20,7 +20,7 @@ type postUrl struct{
 }
 var(
 	conf = configure.New()
-	mongoURI = conf.String("mongo_uri","mongo uri","MongoDB URI")
+	mongoURI = conf.String("mongo-uri","mongo uri","MongoDB URI")
 	client *mongo.Client
 	collection *mongo.Collection
 	err error
