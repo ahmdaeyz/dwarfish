@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/paked/configure"
 	"github.com/thanhpk/randstr"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -19,8 +18,6 @@ type postUrl struct{
 	LongURL string `json:"long_url"`
 }
 var(
-	conf = configure.New()
-	mongoURI = conf.String("mongo-uri","mongo uri","MongoDB URI")
 	client *mongo.Client
 	collection *mongo.Collection
 	err error
@@ -33,12 +30,9 @@ func determineListenAddress() (string, error) {
 	return ":" + port, nil
 }
 func init(){
-	conf.Use(configure.NewEnvironment())
-	conf.Use(configure.NewFlag())
-	conf.Use(configure.NewJSONFromFile("config.json"))
+	mongoURI:= os.Getenv("MONGO_URI")
 	ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
-	fmt.Println(*mongoURI)
-	client, err = mongo.Connect(ctx, options.Client().ApplyURI(*mongoURI))
+	client, err = mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
 	if err!=nil{
 		log.Fatal(err)
 	}

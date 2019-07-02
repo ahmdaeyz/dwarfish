@@ -51,60 +51,6 @@
 			"revisionTime": "2019-02-18T23:22:22Z"
 		},
 		{
-			"checksumSHA1": "C0MwL6ShVhJK9hCTvCfH143twkU=",
-			"path": "github.com/hashicorp/hcl",
-			"revision": "cf7d376da96d9cecec7c7483cec2735efe54a410",
-			"revisionTime": "2019-06-11T12:32:18Z"
-		},
-		{
-			"checksumSHA1": "7QpzuLg3aKDJWPD2kUz1Jw+JJfU=",
-			"path": "github.com/hashicorp/hcl/hcl/ast",
-			"revision": "cf7d376da96d9cecec7c7483cec2735efe54a410",
-			"revisionTime": "2019-06-11T12:32:18Z"
-		},
-		{
-			"checksumSHA1": "Pbe4gvqOpl+09HHYGielTW7RxjY=",
-			"path": "github.com/hashicorp/hcl/hcl/parser",
-			"revision": "cf7d376da96d9cecec7c7483cec2735efe54a410",
-			"revisionTime": "2019-06-11T12:32:18Z"
-		},
-		{
-			"checksumSHA1": "FkV6X2KBq7CUPtUNH+rVza5Y5O4=",
-			"path": "github.com/hashicorp/hcl/hcl/scanner",
-			"revision": "cf7d376da96d9cecec7c7483cec2735efe54a410",
-			"revisionTime": "2019-06-11T12:32:18Z"
-		},
-		{
-			"checksumSHA1": "Vb22K5JK1GTX5xLJyrLrROoA7FQ=",
-			"path": "github.com/hashicorp/hcl/hcl/strconv",
-			"revision": "cf7d376da96d9cecec7c7483cec2735efe54a410",
-			"revisionTime": "2019-06-11T12:32:18Z"
-		},
-		{
-			"checksumSHA1": "dljEjBgEewtuvGQ64XBvHB3iUkg=",
-			"path": "github.com/hashicorp/hcl/hcl/token",
-			"revision": "cf7d376da96d9cecec7c7483cec2735efe54a410",
-			"revisionTime": "2019-06-11T12:32:18Z"
-		},
-		{
-			"checksumSHA1": "+Y/a0ePZ1i7E0NpQvtm1rc6RQT0=",
-			"path": "github.com/hashicorp/hcl/json/parser",
-			"revision": "cf7d376da96d9cecec7c7483cec2735efe54a410",
-			"revisionTime": "2019-06-11T12:32:18Z"
-		},
-		{
-			"checksumSHA1": "kw2I3QA57jE9QR6FyqlCUk0bdkY=",
-			"path": "github.com/hashicorp/hcl/json/scanner",
-			"revision": "cf7d376da96d9cecec7c7483cec2735efe54a410",
-			"revisionTime": "2019-06-11T12:32:18Z"
-		},
-		{
-			"checksumSHA1": "knLekryOag5SGOV4jX8nwudBCDo=",
-			"path": "github.com/hashicorp/hcl/json/token",
-			"revision": "cf7d376da96d9cecec7c7483cec2735efe54a410",
-			"revisionTime": "2019-06-11T12:32:18Z"
-		},
-		{
 			"checksumSHA1": "JXlC3eSy7kLsz93aVdKGKtfBSj0=",
 			"path": "github.com/json-iterator/go",
 			"revision": "27518f6661eba504be5a7a9a9f6d9460d892ade3",
@@ -127,12 +73,6 @@
 			"path": "github.com/modern-go/reflect2",
 			"revision": "94122c33edd36123c84d5368cfb2b69df93a0ec8",
 			"revisionTime": "2018-07-18T01:23:57Z"
-		},
-		{
-			"checksumSHA1": "xP5UOuGMw+xjzMPbqZ0bdZwhbo8=",
-			"path": "github.com/paked/configure",
-			"revision": "28f9c3f21a4454ca2e6ae1358856c6908293a46f",
-			"revisionTime": "2019-02-18T14:01:48Z"
 		},
 		{
 			"checksumSHA1": "9vBhRue1FN1FzOwHxs7JtHtErh0=",
