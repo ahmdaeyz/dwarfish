@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/paked/configure"
 	"log"
 	"net/http"
 	"os"
@@ -17,6 +18,10 @@ import (
 type postUrl struct{
 	LongURL string `json:"long_url"`
 }
+var(
+	conf = configure.New()
+	mongoURI = conf.String("mongo_uri","mongo uri","MongoDB URI")
+)
 func determineListenAddress() (string, error) {
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -24,10 +29,14 @@ func determineListenAddress() (string, error) {
 	}
 	return ":" + port, nil
 }
+func init(){
+	conf.Use(configure.NewEnvironment())
+	conf.Use(configure.NewFlag())
+	conf.Use(configure.NewJSONFromFile("./config.json"))
+}
 func main(){
-	mongoURI:="mongodb+srv://ahmdaeyz:ahmd1234@cluster0-i9ke0.mongodb.net/test?retryWrites=true&w=majority"
 	ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(*mongoURI))
 	if err!=nil{
 		log.Fatal(err)
 	}
