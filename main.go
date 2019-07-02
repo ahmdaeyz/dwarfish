@@ -21,6 +21,9 @@ type postUrl struct{
 var(
 	conf = configure.New()
 	mongoURI = conf.String("mongo_uri","mongo uri","MongoDB URI")
+	client *mongo.Client
+	collection *mongo.Collection
+	err error
 )
 func determineListenAddress() (string, error) {
 	port := os.Getenv("PORT")
@@ -33,20 +36,20 @@ func init(){
 	conf.Use(configure.NewEnvironment())
 	conf.Use(configure.NewFlag())
 	conf.Use(configure.NewJSONFromFile("./config.json"))
-}
-func main(){
 	ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(*mongoURI))
+	client, err = mongo.Connect(ctx, options.Client().ApplyURI(*mongoURI))
 	if err!=nil{
 		log.Fatal(err)
 	}
-	collection := client.Database("dwarfish").Collection("urls")
+	collection = client.Database("dwarfish").Collection("urls")
+}
+func main(){
 	gin.SetMode(gin.ReleaseMode)
 	r:= gin.Default()
 	r.GET("/s/:short", func(c *gin.Context) {
 		shortURL:=c.Param("short")
 		var result bson.M
-		ctx, _ = context.WithTimeout(context.Background(), 20*time.Second)
+		ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
 		lookup:=collection.FindOneAndUpdate(ctx,bson.M{"short_url":shortURL},bson.M{"$inc":bson.M{"views":1}})
 		err=lookup.Decode(&result)
 		if err==mongo.ErrNoDocuments{
@@ -61,7 +64,7 @@ func main(){
 	r.GET("/i/:short", func(i *gin.Context) {
 		shortURL:= i.Param("short")
 		var result bson.M
-		ctx, _ = context.WithTimeout(context.Background(), 20*time.Second)
+		ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
 		lookup:=collection.FindOne(ctx,bson.M{"short_url":shortURL})
 		err=lookup.Decode(&result)
 		if err==mongo.ErrNoDocuments{
@@ -78,7 +81,6 @@ func main(){
 	r.POST("/l", func(i *gin.Context) {
 		var postURL postUrl
 		var token string
-		//var expires time.Time
 		if err:= i.ShouldBindJSON(&postURL);err!=nil{
 			i.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
