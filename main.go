@@ -1,17 +1,4 @@
 package main
-
-/*
-implementing a url shortening service
-database :nonsql solution -> mongodb
-document model :
-{
-	longURL: `string`
-	shortURL: `string`
-}
-urls are kept for 24 hours
-GET	dwarfish.herokuapp.com/s/{shortURL} will be redirected to -> LONG URL
-POST dwarfish.herokuapp.com/l body has longURL in json (might add other features so this is safe)
-*/
 import (
 	"context"
 	"errors"
@@ -29,7 +16,6 @@ import (
 )
 type postUrl struct{
 	LongURL string `json:"long_url"`
-	//Life int `json:"life"`
 }
 func determineListenAddress() (string, error) {
 	port := os.Getenv("PORT")
@@ -46,19 +32,12 @@ func main(){
 		log.Fatal(err)
 	}
 	collection := client.Database("dwarfish").Collection("urls")
-	//go func(){
-	//		for {
-	//			collection.Aggregate(ctx,bson.A{bson.M{"$project":bson.M{"keep":bson.M{"$cond":bson.M{"if":bson.M{"$eq":bson.A{"$expires","$currentDate"}},"then":false,"else":true}}}}})
-	//			time.Sleep(1*time.Second)
-	//		}
-	//	}()
 	gin.SetMode(gin.ReleaseMode)
 	r:= gin.Default()
 	r.GET("/s/:short", func(c *gin.Context) {
 		shortURL:=c.Param("short")
 		var result bson.M
 		ctx, _ = context.WithTimeout(context.Background(), 20*time.Second)
-		//lookup:=collection.FindOne(ctx,bson.M{"short_url":shortURL})
 		lookup:=collection.FindOneAndUpdate(ctx,bson.M{"short_url":shortURL},bson.M{"$inc":bson.M{"views":1}})
 		err=lookup.Decode(&result)
 		if err==mongo.ErrNoDocuments{
@@ -95,10 +74,6 @@ func main(){
 			i.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		//if postURL.Life<24&&postURL.Life!=0{
-		//	i.JSON(http.StatusBadRequest,gin.H{"error":"url life should be more than 24 hours"})
-		//	return
-		//}
 		for{
 			token = randstr.String(5)
 			ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
@@ -112,10 +87,6 @@ func main(){
 			}
 			log.Println(token ,"duplicate")
 		}
-		//if postURL.Life!=0{
-		//	duration, _:=time.ParseDuration(strconv.Itoa(postURL.Life)+"h")
-		//	expires=time.Now().Add(duration)
-		//}
 		ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
 		_,err=collection.InsertOne(ctx,bson.M{"long_url":postURL.LongURL,"short_url":token,"views":0})
 		if err!=nil{
