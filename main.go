@@ -37,6 +37,7 @@ func init(){
 	conf.Use(configure.NewFlag())
 	conf.Use(configure.NewJSONFromFile("./config.json"))
 	ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
+	fmt.Println(*mongoURI)
 	client, err = mongo.Connect(ctx, options.Client().ApplyURI(*mongoURI))
 	if err!=nil{
 		log.Fatal(err)
