@@ -4,11 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/paked/configure"
 	"github.com/thanhpk/randstr"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"github.com/paked/configure"
 	"log"
 	"net/http"
 	"os"
@@ -35,7 +35,7 @@ func determineListenAddress() (string, error) {
 func init(){
 	conf.Use(configure.NewEnvironment())
 	conf.Use(configure.NewFlag())
-	conf.Use(configure.NewJSONFromFile("./config.json"))
+	conf.Use(configure.NewJSONFromFile("config.json"))
 	ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
 	fmt.Println(*mongoURI)
 	client, err = mongo.Connect(ctx, options.Client().ApplyURI(*mongoURI))
