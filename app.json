@@ -1,0 +1,15 @@
+{
+  "name": "dwarfish",
+  "description": "Shorten urls",
+  "keywords": [
+    "golang",
+    "url-shortener",
+    "gin"
+  ],
+  "repository": "https://github.com/ahmdaeyz/dwarfish",
+  "env": {
+    "MONGO_URI": {
+      "description": "A secret key for Mongodb",
+      "generator": "secret"
+    }
+}
