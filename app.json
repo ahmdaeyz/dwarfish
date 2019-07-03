@@ -12,4 +12,5 @@
       "description": "A secret key for Mongodb",
       "generator": "secret"
     }
+  }
 }
