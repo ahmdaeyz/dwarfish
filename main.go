@@ -36,7 +36,7 @@ func init(){
 	if err!=nil{
 		log.Fatal(err)
 	}
-	collection = client.Database("dwarfish").Collection("urls")
+	collection = client.Database(os.Getenv("DATABASE_NAME")).Collection(os.Getenv("COLLECTION_NAME"))
 }
 func main(){
 	gin.SetMode(gin.ReleaseMode)
