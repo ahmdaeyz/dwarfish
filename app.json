@@ -9,8 +9,13 @@
   "repository": "https://github.com/ahmdaeyz/dwarfish",
   "env": {
     "MONGO_URI": {
-      "description": "A secret key for Mongodb",
-      "generator": "secret"
+      "description": "Mongodb cluster uri"
+    },
+    "DATABASE_NAME": {
+      "description": "Mongodb database name"
+    },
+    "COLLECTION_NAME": {
+      "description": "Mongodb collection name"
     }
   }
 }
